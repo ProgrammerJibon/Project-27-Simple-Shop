@@ -1,0 +1,23 @@
+# Checking if server supported rewrite engine
+<IfModule mod_rewrite.c>
+
+# turning on rewrite engine
+RewriteEngine On
+
+RewriteRule ^style.css$ css.php
+RewriteRule ^script.js$ js.php
+
+# rewrite condition if directory not exists
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+# rewrite condition if file not exists
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+# rewriting condition
+RewriteRule ^(.*) /index.php?page=$1 [L,QSA]
+</IfModule>
+
+# setting cachce for 7days
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
